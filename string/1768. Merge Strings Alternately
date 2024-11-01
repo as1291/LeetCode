@@ -1,0 +1,25 @@
+//Similar to the concept of merging in merge sort
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int i = 0, j = 0;
+        int flag = 0;
+        string str;
+        while (i < word1.length() && j < word2.length()) {
+            if (flag == 0) {
+                str += word1[i++];
+                flag = 1;
+            } else {
+                str += word2[j++];
+                flag = 0;
+            }
+        }
+        if (i < word1.length()) {
+            str += word1.substr(i, word1.length() - i);
+        }
+        if (j < word2.length()) {
+            str += word2.substr(j, word2.length() - j);
+        }
+        return str;
+    }
+};
