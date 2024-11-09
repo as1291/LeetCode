@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int i = 0;
+        // finding non space element
+        while (s[i] == ' ')
+            i++;
+
+        // pushing elements in stack
+        stack<char> r;
+        while (i < s.length()) {
+            // space case
+            // last element
+            if (i == s.length() - 1 && s[i] == ' ') {
+                i++;
+                continue;
+            }
+
+            if (s[i] == ' ' && s[i + 1] == ' ') {
+                i++;
+                continue;
+            }
+
+            r.push(s[i++]);
+        }
+
+        // forming answer string
+        string ans;
+        while (!r.empty()) {
+            if (r.top() == ' ') {
+                ans.push_back(r.top());
+                r.pop();
+                continue;
+            }
+            string temp;
+            while (!r.empty() && r.top() != ' ') {
+                temp.insert(0, 1, r.top());
+                r.pop();
+            }
+            ans += temp;
+        }
+
+        return ans;
+    }
+};
