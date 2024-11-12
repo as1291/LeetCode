@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
+        // Step 1: Sort items by cost
+        sort(items.begin(), items.end());
+        
+        // Step 2: Sort queries but also keep track of their original indices
+        vector<pair<int, int>> indexedQueries;
+        for (int i = 0; i < queries.size(); i++) {
+            indexedQueries.push_back({queries[i], i});
+        }
+        sort(indexedQueries.begin(), indexedQueries.end());
+        
+        vector<int> result(queries.size());
+        int maxBeauty = 0;
+        int j = 0; // Pointer for iterating through items
+        
+        // Step 3: Process each query
+        for (auto& query : indexedQueries) {
+            int budget = query.first;
+            int originalIndex = query.second;
+            
+            // Move through items that are affordable with the current query's budget
+            while (j < items.size() && items[j][0] <= budget) {
+                maxBeauty = max(maxBeauty, items[j][1]);
+                j++;
+            }
+            
+            // Store the result for this query
+            result[originalIndex] = maxBeauty;
+        }
+        
+        return result;
+    }
+};
