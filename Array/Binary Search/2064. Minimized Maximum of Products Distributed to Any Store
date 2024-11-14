@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int minimizedMaximum(int n, vector<int>& quant) {
+
+        auto isPossible = [&](int j) {
+            int stores_req = 0;
+            for (int q : quant) {
+                int i_stores = (q + j - 1) / j;
+                stores_req += i_stores;
+                if (stores_req > n)
+                    return false;
+            }
+            return true;
+        };
+
+        int low = 1;
+        int high = *max_element(quant.begin(), quant.end());
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (isPossible(mid))
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+        return low;
+    }
+};
